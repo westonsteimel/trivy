@@ -37,6 +37,8 @@ var (
 		"10":  time.Date(2024, 6, 30, 23, 59, 59, 0, time.UTC),
 		"11":  time.Date(3000, 1, 1, 23, 59, 59, 0, time.UTC),
 		"12":  time.Date(3000, 1, 1, 23, 59, 59, 0, time.UTC),
+		// Unstable
+		"bullseye/sid": time.Date(3000, 1, 1, 23, 59, 59, 0, time.UTC),
 	}
 )
 
@@ -61,6 +63,11 @@ func (s *Scanner) Detect(osVer string, pkgs []ftypes.Package) ([]types.DetectedV
 	if strings.Count(osVer, ".") > 0 {
 		osVer = osVer[:strings.Index(osVer, ".")]
 	}
+
+	if osVer == "bullseye/sid" {
+		osVer = "unstable"
+	}
+
 	log.Logger.Debugf("debian: os version: %s", osVer)
 	log.Logger.Debugf("debian: the number of packages: %d", len(pkgs))
 
